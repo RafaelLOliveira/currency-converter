@@ -62,12 +62,14 @@
         android:text="Calculate"/>
 
     <TextView
-        android:id="@+id/currency_converted"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/currency_converted_field"
+        android:layout_width="385dp"
+        android:layout_height="46dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
-        android:text="Currency converted:  "
+        android:text="Currency converted: 0"
+        android:textAllCaps="true"
+        android:textSize="17dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calculate_button" />
 

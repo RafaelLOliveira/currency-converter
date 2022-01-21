@@ -2,68 +2,51 @@ package br.com.example.currencyconverter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.Toast
-import br.com.example.currencyconverter.databinding.ActivityMainBinding
-import java.text.NumberFormat
+import android.widget.*
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding : ActivityMainBinding
-    var currencySelected : Double = 0.0
-    var calculation : Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Toast.makeText(this, "Welcome", Toast.LENGTH_LONG).show()
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //inicia objeto binding
-        binding = ActivityMainBinding.inflate(layoutInflater)
-
 
         findViewById<Button>(R.id.calculate_button).setOnClickListener {
-            Toast.makeText(this, "Vc clicou", Toast.LENGTH_SHORT).show()
-            calculateCurrency()
+            Toast.makeText(this, "Currency Converted", Toast.LENGTH_SHORT).show()
 
+            val currencyTyped = defineCurrencyTyped(findViewById(R.id.currency_value))
+
+            val result: Double = currencyConversion(currencyTyped)
+
+            val currencyConverted : TextView = findViewById(R.id.currency_converted_field)
+            currencyConverted.text = "Currency Converted: $result"
         }
 
     }
 
-
-    private fun calculateCurrency() {
-        //take the typed number
-        val stringInTextField = binding.currencyValue.text.toString()
-        val currencyTyped = stringInTextField.toDouble()
-
-        //take the currency option
-        val selectedId  = binding.currencyOptions.checkedRadioButtonId
-
-        defineCurrencySelected(selectedId)
-        calculateCurrencyConversion(currencyTyped)
-
-        val formattedCurrency = NumberFormat.getCurrencyInstance().format(calculation)
-
-        binding.currencyConverted.text = "aa"
-    }
-
-
-
-    private fun calculateCurrencyConversion(currencyTyped: Double) {
-        calculation = currencySelected * currencyTyped
-    }
-
-
-    //function what returns a double
-    private fun defineCurrencySelected(selectedId: Int):Double {
-        if(selectedId == R.id.option_dollar){
-            currencySelected = 6.0
+    private fun currencyConversion(currencyTyped: Double) : Double{
+        val checkedCurrencyInRadioGroup: Int = defineCheckedCurrency()
+        var currencyForCalculation : Double = 0.0
+        if(checkedCurrencyInRadioGroup == R.id.option_dollar){
+            currencyForCalculation = 5.42
         }
         else{
-            currencySelected = 7.0
+            currencyForCalculation = 6.14
         }
-        return currencySelected
+        return currencyForCalculation * currencyTyped
+    }
+
+    private fun defineCheckedCurrency(): Int {
+        val radioGroup: RadioGroup = findViewById(R.id.currency_options)
+        val checkedCurrency: Int = radioGroup.checkedRadioButtonId
+        return checkedCurrency
+    }
+
+    private fun defineCurrencyTyped(editTextField: EditText): Double {
+        val temp: String = editTextField.text.toString()
+        return temp.toDouble()
     }
 
 }
