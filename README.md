@@ -1,2 +1,2 @@
 # currency-converter
-## Calculator what converts real(R$) to dollar(US$) or euro(€)
+## Calculator what converts real to dollar or euro.
